@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejemplo input</title>
+
+    <style>
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container.invisible {
+            width: 40px;
+            height: 40px;
+            border-radius: 20px;
+            position: relative;
+            -webkit-transition: width .3s ease-in-out;
+            -moz-transition: width .3s ease-in-out;
+            -o-transition: width .3s ease-in-out;
+            transition: width .3s ease-in-out;
+        }
+
+        .container.visible {
+            width: 300px;
+            border: 1px solid #cccccc;
+            -webkit-transition: width .3s ease-in-out;
+            -moz-transition: width .3s ease-in-out;
+            -o-transition: width .3s ease-in-out;
+            transition: width .3s ease-in-out;
+
+            -webkit-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+            -moz-box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+            box-shadow: 0px 3px 6px 0px rgba(0,0,0,0.1);
+        }
+
+        #search {
+            width: 0;
+            border: none;
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            line-height: 18px;
+        }
+
+        #search:focus{
+            border: none;
+            box-shadow: none;
+            outline: none;
+        }
+
+        #search-label {
+            cursor: pointer;
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            top: 10px;
+            right: 5px;
+        }
+
+        #search-label > img {
+            width: 18px;
+            height: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container invisible">
+        <input type="text" id="search" name="search" placeholder="Buscar..." >
+        <label for="search" id="search-label">
+            <img src="https://img.icons8.com/android/24/000000/search.png"/>
+        </label>
+    </div>
+
+
+    <script>
+        // Aca obtengo los elementos del DOM con querySelector,
+        // se dice que querySelector es mejor que getElementById
+        // y se puede usar tanto # para seleccionar por id
+        // como . para seleccionar por clase
+        // Usé const porque mas adelante no se modifican estas variables
+
+        // IMPORTANTE
+        // En visible si tenes que usar var o let porque es una
+        // variable que SI se modifica mas adelante en el codigo
+        // IMPORTANTE
+        // Referencia: https://developer.mozilla.org/es/docs/Learn/JavaScript/First_steps/Variables
+        const container = document.querySelector('.container');
+        const button = document.getElementById('search-label')
+        let input = document.querySelector('#search');
+        var visible = false;
+
+        // addEventListener, valga la redundancia, es para escuchar eventos
+        // que puedan surgir en el objeto del DOM
+        // Esos eventos pueden ser por ejemplo click, hover, onChange, etc
+        // Referencia: https://developer.mozilla.org/es/docs/Web/API/EventTarget/addEventListener
+        button.addEventListener('click', handleInputVisibility);
+
+        function handleInputVisibility(){
+            // Lo que hace la expresion ! antes del visible es suplantar
+            // el valor actual (false) por su contrario (true)
+            // y lo mismo si estuviera en true, se pasa al contrario (false)
+            // Referencia: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Logical_NOT
+            visible = !visible;
+
+            if(visible){
+                container.classList.add('visible');
+
+                // Para poner estilos a un elemento se puede acceder
+                // desde la referencia variable o
+                // utilizando document.getElementById('search')
+                // Referencia: https://developer.mozilla.org/es/docs/Web/API/ElementCSSInlineStyle/style
+                input.style.width = "80%";
+                input.style.margin = "auto";
+                input.focus() // Esta propiedad lo que va a hacer es enfocar al input para que sea mas facil comenzar a escribir, Referencia: https://developer.mozilla.org/es/docs/Web/API/HTMLOrForeignElement/focus
+
+            } else {
+                container.classList.remove('visible');
+                input.style.width = 0;
+            }
+        }
+    </script>
+</body>
+</html>
